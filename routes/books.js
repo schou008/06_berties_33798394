@@ -1,4 +1,4 @@
-// Create a new router
+//Create a new router
 const express = require("express")
 const router = express.Router()
 
@@ -7,9 +7,23 @@ router.get('/search',function(req, res, next){
 });
 
 router.get('/search-result', function (req, res, next) {
-    //searching in the database
+    //Searching in the database
     res.send("You searched for: " + req.query.keyword)
 });
 
-// Export the router object so index.js can access it
+//Route to display all books
+router.get('/list', function(req, res, next) {
+    //Query database to get all the books
+    const sqlquery = "SELECT * FROM books";
+
+    db.query(sqlquery, (err, result) => {
+        if (err) {
+            return next(err);
+        }
+    //Send the result as JSON
+        res.send(result);
+    });
+});
+
+//Export the router object so index.js can access it
 module.exports = router
