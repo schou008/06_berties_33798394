@@ -1,6 +1,6 @@
 # Berties Books
 
-In this lab, I extended my Node.js web application, berties-books, by integrating it with a MySQL database. I started by installing MySQL on my local computer and creating a new database. Then, I set up the tables and inserted some data. I practiced executing SQL statements to explore the schema and the data it contains. After that, I queried the database from my Node.js application to display drinks and user information dynamically. Finally, I installed MySQL on my virtual server and deployed my application, connecting it to the database.
+In this lab, I extended my Node.js web application, berties-books, by integrating it with a MySQL database. I started by installing MySQL on my local computer and creating a new database. Then, I set up the tables and inserted some data. I practiced executing SQL statements to explore the schema and the data it contains. After that, I queried the database from my Node.js application to display books. Finally, I installed MySQL on my virtual server and deployed my application, connecting it to the database.
 
 ## Technologies Used
 
