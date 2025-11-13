@@ -1,16 +1,25 @@
 <!doctype html>
 <html>
   <head>
+    <!-- Page title dynamically includes the shop name -->
     <title>Register for <%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
+    
+    <!-- Link to external CSS for styling -->
+    <link rel="stylesheet" type="text/css" href="/main.css" />
   </head>
   <body>
+    <!-- Page heading with shop name -->
     <h1>Register for <%=shopData.shopName%></h1>
+    
+    <!-- Registration form -->
     <form method="POST" action="registered">
+        <!-- Input fields for user details -->
         <p>First name: <input id="first" type="text" name="first" /></p>
         <p>Last name: <input id="last" type="text" name="last" /></p>
         <p>Email: <input id="email" type="email" name="email" /></p>
+        
+        <!-- Submit button -->
         <input type="submit" value="Register" />
-      </form>
+    </form>
   </body>
 </html>

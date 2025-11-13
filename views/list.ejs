@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berties Book Shop</title>
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+    <header>
+        <h1>Berties Book Shop</h1>
+    </header>
+    <main>
+        <h2>Available Books</h2>
+
+        <!-- Table to display available books -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through availableBooks array and display each book -->
+                <% availableBooks.forEach(function(book) { %>
+                    <tr>
+                        <td><%= book.id %></td>
+                        <td><%= book.name %></td>
+                        <td class="price">
+                            <!-- Format price to 2 decimal places, default to 0.00 -->
+                            £<%= book.price ? Number(book.price).toFixed(2) : "0.00" %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

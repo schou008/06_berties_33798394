@@ -2,7 +2,7 @@
 const express = require("express")
 const router = express.Router()
 
-router.get('/search',function(req, res, next){
+router.get('/search', function(req, res, next){
     res.render("search.ejs")
 });
 
@@ -20,10 +20,30 @@ router.get('/list', function(req, res, next) {
         if (err) {
             return next(err);
         }
-    //Send the result as JSON
-        res.send(result);
+        //Render the result using EJS template
+        res.render("list.ejs", { availableBooks: result });
+    });
+});
+
+//Shows the Add Book form
+router.get('/addbook', (req, res) => {
+    res.render('addbook'); // renders addbook.ejs
+});
+
+//Handles form submission and save book to database
+router.post('/bookadded', function (req, res, next) {
+    let sqlquery = "INSERT INTO books (name, price) VALUES (?,?)";
+    let newrecord = [req.body.name, req.body.price];
+
+    db.query(sqlquery, newrecord, (err, result) => {
+        if (err) {
+            next(err);
+        } else {
+            res.send('This book is added to database. Name: '+ req.body.name + ', Price: $' + req.body.price);
+        }
     });
 });
 
 //Export the router object so index.js can access it
 module.exports = router
+
