@@ -34,7 +34,9 @@ If you already have the express framework then you can skip this step
 
 If you already have the EJS package then you can skip this step
 
-5. Run the Web Application You can run the web application by typing the command below: node index.js
+5. run npm install mysql2
 
-6. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+6. Run the Web Application You can run the web application by typing the command below: node index.js
+
+7. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
 
