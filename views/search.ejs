@@ -1,25 +1,22 @@
 <!doctype html>
 <html>
   <head>
-    <!-- Page title dynamically includes the shop name -->
     <title>Search <%=shopData.shopName%></title>
-    
-    <!-- Link to external CSS for styling -->
     <link rel="stylesheet" type="text/css" href="/main.css" />
   </head>
   <body>
-    <!-- Page heading with shop name -->
-    <h1>Search <%=shopData.shopName%></h1>
-    
-    <!-- Search form -->
-    <form action="search_result" method="GET">
-      <p>What book do you want?</p>
-      
-      <!-- Text input for search query -->
-      <input id="search-box" type="text" name="search_text">
-      
-      <!-- Submit button -->
-      <input type="submit" value="Search">
-    </form>
+    <header>
+        <h1>Search <%=shopData.shopName%></h1>
+    </header>
+    <main>
+        <form action="/books/search-result" method="GET">
+            <p>What book do you want?</p>
+            
+            <!-- Use 'keyword' as the name to match req.query.keyword -->
+            <input id="search-box" type="text" name="keyword" required>
+            
+            <input type="submit" value="Search Books">
+        </form>
+    </main>
   </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+    <header>
+        <h1>Search Results for "<%= keyword %>"</h1>
+    </header>
+    <main>
+        <% if (books.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price (£)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% books.forEach(function(book) { %>
+                        <tr>
+                            <td><%= book.name %></td>
+                            <td class="price">£<%= Number(book.price).toFixed(2) %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No books found matching "<%= keyword %>".</p>
+        <% } %>
+    </main>
+</body>
+</html>
