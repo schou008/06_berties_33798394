@@ -13,12 +13,12 @@ router.get('/register', function (req, res, next) {
 router.post('/registered', function (req, res, next) {
     //Retrieves the Plain Password from the Form
     const plainPassword = req.body.password
-    // Hash the password before storing it in the database
+    //Hash the password before storing it in the database
     try {
     bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) {
     if (err) return next(err)
 
-    // Saving data in database
+    //Saving data in database
     const sql = 'INSERT INTO users (username, firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
     const values = [req.body.username, req.body.first, req.body.last, req.body.email, hashedPassword];
 
@@ -35,6 +35,18 @@ router.post('/registered', function (req, res, next) {
 next(error)
 }
 })
+
+//List all users
+router.get('/list', function (req, res, next) {
+    const sqlquery = "SELECT username, firstName, lastName, email FROM users";
+
+    db.query(sqlquery, (err, results) => {
+        if (err) return next(err);
+
+        //Render listusers.ejs with the user data
+        res.render('listusers.ejs', { users: results });
+    });
+});
 
 //Export the router object so index.js can access it
 module.exports = router
