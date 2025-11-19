@@ -1,6 +1,8 @@
 # Berties Books
 
-In this lab, I extended my Node.js web application, berties-books, by integrating it with a MySQL database. I started by installing MySQL on my local computer and creating a new database. Then, I set up the tables and inserted some data. I practiced executing SQL statements to explore the schema and the data it contains. After that, I queried the database from my Node.js application to display books. Finally, I installed MySQL on my virtual server and deployed my application, connecting it to the database.
+In Week 6, I extended my Node.js web application, berties-books, by integrating it with a MySQL database. I started by installing MySQL on my local computer and creating a new database. Then, I set up the tables and inserted some data. I practiced executing SQL statements to explore the schema and the data it contains. After that, I queried the database from my Node.js application to display books. Finally, I installed MySQL on my virtual server and deployed my application, connecting it to the database.
+
+In Week 7, 
 
 ## Technologies Used
 
@@ -17,6 +19,8 @@ HTML - Displays the Web Application in the Browser
 CSS – Used to style the webpages
 
 SQL - Used to Interact with Databases
+
+bcrypt - Password Hashing 
 
 ## How to Install and Run Locally
 
@@ -36,7 +40,9 @@ If you already have the EJS package then you can skip this step
 
 5. run npm install mysql2
 
-6. Run the Web Application You can run the web application by typing the command below: node index.js
+6. run npm install bcrypt 
 
-7. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+7. Run the Web Application You can run the web application by typing the command below: node index.js
+
+8. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
 

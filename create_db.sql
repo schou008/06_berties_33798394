@@ -11,6 +11,16 @@ CREATE TABLE IF NOT EXISTS books (
     price  DECIMAL(5, 2),
     PRIMARY KEY(id));
 
+CREATE TABLE IF NOT EXISTS users (
+id INT AUTO_INCREMENT PRIMARY KEY,
+username VARCHAR(50) NOT NULL UNIQUE,
+firstName VARCHAR(100) NOT NULL,
+lastName VARCHAR(100) NOT NULL,
+email VARCHAR(255) NOT NULL UNIQUE,
+hashedPassword VARCHAR(255) NOT NULL,
+createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 # Create the application user 
 CREATE USER IF NOT EXISTS 'berties_books_app'@'localhost' IDENTIFIED BY 'qwertyuiop';  
 GRANT ALL PRIVILEGES ON berties_books.* TO ' berties_books_app'@'localhost'; 
