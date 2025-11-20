@@ -136,4 +136,4 @@ If you already have the EJS package then you can skip this step
 
 2.2 Added code to insert_text_data.sql
 
-2.3 Added more information about the app covering week 7
+2.3 Added more information about the app covering Week 7
