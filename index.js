@@ -1,5 +1,9 @@
-// Load environment variables from .env
+//Load environment variables from .env
 require('dotenv').config();
+
+console.log('DB User:', process.env.BB_USER);
+console.log('DB Password:', process.env.BB_PASSWORD);
+console.log('DB Name:', process.env.BB_DATABASE);
 
 //Import express and ejs
 var express = require ('express')
