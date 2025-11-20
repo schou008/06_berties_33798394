@@ -2,7 +2,38 @@
 
 In Week 6, I extended my Node.js web application, berties-books, by integrating it with a MySQL database. I started by installing MySQL on my local computer and creating a new database. Then, I set up the tables and inserted some data. I practiced executing SQL statements to explore the schema and the data it contains. After that, I queried the database from my Node.js application to display books. Finally, I installed MySQL on my virtual server and deployed my application, connecting it to the database.
 
-In Week 7, 
+In Week 7,
+
+## dotenv
+
+To avoid storing sensitive database credentials directly in the source code, I implemented the dotenv module.
+
+How I Implemented it
+
+1.Installed the dotenv package:
+
+npm install dotenv
+
+2.Created a .env file containing the required variables:
+
+BB_USER='berties_books_app'
+BB_PASSWORD='qwertyuiop'
+BB_DATABASE='berties_books'
+
+3.Updated the database connection file to load environment variables:
+
+require('dotenv').config();
+
+const db = mysql.createPool({
+    host: 'localhost',
+    user: process.env.BB_USER,
+    password: process.env.BB_PASSWORD,
+    database: process.env.BB_DATABASE
+});
+
+4.Added .env to .gitignore so credentials remain private.
+
+This approach prevents passwords from being exposed in the repository while still allowing the application to run correctly during marking by using the required default environment variable names.
 
 ## Technologies Used
 
@@ -27,22 +58,38 @@ bcrypt - Password Hashing
 1. Clone the Repository You can clone the repository by typing the command below: git clone https://github.com/schou008/06_berties_33798394 cd 06_berties_33798394
 
 2. Install Node.js if you have not, you can do this from nodejs.org. 
-
 If you have already installed Node.js you can skip this step
 
 3. Install the Express Framework, you can do this by typing in the command below: npm install express
-
 If you already have the express framework then you can skip this step
 
 4. Install the EJS Package, you can do this by typing in the command below: npm install ejs 
-
 If you already have the EJS package then you can skip this step
 
 5. run npm install mysql2
 
-6. run npm install bcrypt 
+6. run npm install bcrypt
 
-7. Run the Web Application You can run the web application by typing the command below: node index.js
+7. run npm install dotenv
 
-8. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+8. Run the Web Application You can run the web application by typing the command below: node index.js
 
+9. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+
+## Versions
+
+1.0 Initial Version of the Web Application
+
+1.1 Added README.md file
+
+1.2 Added information about the web application such as what it is about, what technologies used, explaining how to run and use the app to the README.md file
+
+1.3 Added comments to main.js file, about.ejs file, index.ejs file, register.ejs file and search.ejs file so it is more clear and understandable
+
+1.4 Added links.txt file
+
+1.5 Added code to users.js file, register.ejs file and create_db.sql file to allow password hashing
+
+1.6 Added code to users.js and created a new file called listusers.ejs so that user detail is visible such as username, first name, last name and email
+
+1.7 Added code to users.js and created new file called login.ejs

@@ -48,5 +48,41 @@ router.get('/list', function (req, res, next) {
     });
 });
 
+//Login form
+router.get('/login', function(req, res, next) {
+    res.render('login.ejs')
+})
+
+//Login Handler
+router.post('/loggedin', function(req, res, next) {
+
+    const username = req.body.username
+    const password = req.body.password
+
+    const sql = "SELECT hashedPassword FROM users WHERE username = ?"
+
+    db.query(sql, [username], function(err, results) {
+        if (err) return next(err)
+
+        //Username not found
+        if (results.length === 0) {
+            return res.send("Login failed: Incorrect username or password.")
+        }
+
+        const hashedPassword = results[0].hashedPassword
+
+        //Compare passwords
+        bcrypt.compare(password, hashedPassword, function(err, same) {
+            if (err) return next(err)
+
+            if (same) {
+                res.send("Login successful! Welcome back, " + username + ".")
+            } else {
+                res.send("Login failed: Incorrect username or password.")
+            }
+        })
+    })
+})
+
 //Export the router object so index.js can access it
 module.exports = router
