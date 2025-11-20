@@ -2,7 +2,7 @@
 
 In Week 6, I extended my Node.js web application, berties-books, by integrating it with a MySQL database. I started by installing MySQL on my local computer and creating a new database. Then, I set up the tables and inserted some data. I practiced executing SQL statements to explore the schema and the data it contains. After that, I queried the database from my Node.js application to display books. Finally, I installed MySQL on my virtual server and deployed my application, connecting it to the database.
 
-In Week 7,
+In Week 7, I enhanced my Berties Books Node.js web application by implementing user authentication and password security. I installed the bcrypt module and updated my registration form to include username and password fields. I created a users table in MySQL with columns for username, first name, last name, email, and hashed passwords, and updated my /registered route to hash user passwords before storing them in the database, displaying both the plain and hashed passwords for testing. I then added a /users/list route to view all registered users without showing passwords. Finally, I implemented a login system with /users/login and /users/loggedin routes, which verify a user’s credentials by comparing the submitted password with the hashed password in the database, ensuring that only correct username and password combinations allow login.
 
 ## dotenv
 
@@ -135,3 +135,5 @@ If you already have the EJS package then you can skip this step
 2.1 Added audit section in the README.md file
 
 2.2 Added code to insert_text_data.sql
+
+2.3 Added more information about the app covering week 7
