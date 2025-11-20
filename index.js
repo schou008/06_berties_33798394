@@ -26,15 +26,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.locals.shopData = {shopName: "Bertie's Books"}
 
 //Define the database connection pool 
-const db = mysql.createPool({ 
-    host: 'localhost', 
-    user: process.env.BB_USER, 
-    password: process.env.BB_PASSWORD, 
-    database: process.env.BB_DATABASE, 
-    waitForConnections: true, 
-    connectionLimit: 10, 
-    queueLimit: 0, 
-}); 
+const db = mysql.createPool({
+    host: 'localhost',
+    user: process.env.BB_USER,
+    password: process.env.BB_PASSWORD,
+    database: process.env.BB_DATABASE,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+});
 global.db = db; 
 
 //Load the route handlers
