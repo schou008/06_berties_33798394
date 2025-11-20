@@ -6,37 +6,40 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
+//Register Form Page
 router.get('/register', function (req, res, next) {
     res.render('register.ejs')
 })
 
+//Registered Handler
 router.post('/registered', function (req, res, next) {
     //Retrieves the Plain Password from the Form
     const plainPassword = req.body.password
     //Hash the password before storing it in the database
     try {
-    bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) {
-    if (err) return next(err)
+        bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) {
+            if (err) return next(err)
 
-    //Saving data in database
-    const sql = 'INSERT INTO users (username, firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
-    const values = [req.body.username, req.body.first, req.body.last, req.body.email, hashedPassword];
+            //Saving data in database
+            const sql = 'INSERT INTO users (username, firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
+            const values = [req.body.username, req.body.first, req.body.last, req.body.email, hashedPassword];
 
-    db.query(sql, values, function(error, _results) {
-    if (error) return next(error);
+            db.query(sql, values, function(error, _results) {
+                if (error) return next(error);
 
-    // Build result message including plain and hashed password
-    let result = 'Hello '+ req.body.first + ' ' + req.body.last +' you are now registered! We will send an email to you at ' + req.body.email;
-    result += ' Your password is: '+ req.body.password +' and your hashed password is: '+ hashedPassword;
-    res.send(result);
-  });
-});
-} catch (error) {
-next(error)
-}
+                //Build result message including plain and hashed password
+                let result = 'Hello ' + req.body.first + ' ' + req.body.last + ' you are now registered! We will send an email to you at ' + req.body.email;
+                result += ' Your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword;
+                
+                res.send(result);
+            });
+        });
+    } catch (error) {
+        next(error)
+    }
 })
 
-//List all users
+//List All Users
 router.get('/list', function (req, res, next) {
     const sqlquery = "SELECT username, firstName, lastName, email FROM users";
 
@@ -48,7 +51,7 @@ router.get('/list', function (req, res, next) {
     });
 });
 
-//Login form
+//Login Form Page
 router.get('/login', function(req, res, next) {
     res.render('login.ejs')
 })
@@ -59,6 +62,7 @@ router.post('/loggedin', function(req, res, next) {
     const username = req.body.username
     const password = req.body.password
 
+    //Select the hashed password for the user from the database
     const sql = "SELECT hashedPassword FROM users WHERE username = ?"
 
     db.query(sql, [username], function(err, results) {
@@ -66,23 +70,57 @@ router.post('/loggedin', function(req, res, next) {
 
         //Username not found
         if (results.length === 0) {
+
+            //AUDIT: Record failed login (no such username)
+            const auditFail = "INSERT INTO audit_log (username, success) VALUES (?, ?)"
+            db.query(auditFail, [username, false])
+
             return res.send("Login failed: Incorrect username or password.")
         }
 
         const hashedPassword = results[0].hashedPassword
 
-        //Compare passwords
+        //Compare the password supplied with the password retrieved from the database
         bcrypt.compare(password, hashedPassword, function(err, same) {
             if (err) return next(err)
 
             if (same) {
-                res.send("Login successful! Welcome back, " + username + ".")
+
+                //AUDIT: Record successful login
+                const auditSuccess = "INSERT INTO audit_log (username, success) VALUES (?, ?)"
+                db.query(auditSuccess, [username, true])
+
+                //Send success message
+                return res.send("Login successful! Welcome back, " + username + ".")
             } else {
-                res.send("Login failed: Incorrect username or password.")
+
+                //AUDIT: Record failed login (wrong password)
+                const auditFail = "INSERT INTO audit_log (username, success) VALUES (?, ?)"
+                db.query(auditFail, [username, false])
+
+                //Send failure message
+                return res.send("Login failed: Incorrect username or password.")
             }
         })
     })
 })
+
+
+
+//Audit Log History Page
+router.get('/audit', function (req, res, next) {
+
+    //Retrieve the full audit history
+    const sql = "SELECT username, success, timestamp FROM audit_log ORDER BY timestamp DESC"
+
+    db.query(sql, function (err, results) {
+        if (err) return next(err)
+
+        //Render audit.ejs with the audit log data
+        res.render('audit.ejs', { audit: results })
+    })
+})
+
 
 //Export the router object so index.js can access it
 module.exports = router

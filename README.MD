@@ -35,6 +35,38 @@ const db = mysql.createPool({
 
 This approach prevents passwords from being exposed in the repository while still allowing the application to run correctly during marking by using the required default environment variable names.
 
+## audit
+
+To improve security, I added an audit logging system to record all login attempts.
+
+How I Implemented it:
+
+1.I created a new table audit_log:
+
+CREATE TABLE IF NOT EXISTS audit_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100),
+    success BOOLEAN NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+2.Every time a user attempts to log in:
+
+I check if the username exists.
+
+I compare the submitted password with the hashed password in the database.
+
+I insert a new record in audit_log marking the attempt as:
+
+success = 1 for successful logins
+
+success = 0 for failed logins
+
+3.I created a new route /users/audit that queries the audit_log table and displays the full login history.
+
+This provides a full audit trail of who logged in, when, and whether each attempt was successful or failed.
+
 ## Technologies Used
 
 Node.js - Running the Server with node.js
@@ -51,7 +83,7 @@ CSS – Used to style the webpages
 
 SQL - Used to Interact with Databases
 
-bcrypt - Password Hashing 
+bcrypt - Password Hashing
 
 ## How to Install and Run Locally
 
@@ -93,3 +125,13 @@ If you already have the EJS package then you can skip this step
 1.6 Added code to users.js and created a new file called listusers.ejs so that user detail is visible such as username, first name, last name and email
 
 1.7 Added code to users.js and created new file called login.ejs
+
+1.8 Added .env file to create a enviroment for data
+
+1.9 Added dotenv section in the README.md file
+
+2.0 Added code to users.js and created audit.ejs file for user logging
+
+2.1 Added audit section in the README.md file
+
+2.2 Added code to insert_text_data.sql
