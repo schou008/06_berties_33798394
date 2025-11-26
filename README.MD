@@ -141,3 +141,5 @@ If you already have the EJS package then you can skip this step
 2.3 Added more information about the app covering Week 7
 
 2.4 Added code to index.js and users.js to allow a redirectLogin function
+
+2.5 Added code to main.js file and index.ejs file to create a logout route
