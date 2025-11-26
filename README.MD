@@ -129,6 +129,8 @@ SQL - Used to Interact with Databases
 
 bcrypt - Password Hashing
 
+express-session - Used for the middleware of the Web Application
+
 ## How to Install and Run Locally
 
 1. Clone the Repository You can clone the repository by typing the command below: git clone https://github.com/schou008/06_berties_33798394 cd 06_berties_33798394
