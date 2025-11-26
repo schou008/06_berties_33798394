@@ -104,9 +104,11 @@ If you already have the EJS package then you can skip this step
 
 7. run npm install dotenv
 
-8. Run the Web Application You can run the web application by typing the command below: node index.js
+8. run npm install express-session 
 
-9. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+9. Run the Web Application You can run the web application by typing the command below: node index.js
+
+10. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
 
 ## Versions
 
