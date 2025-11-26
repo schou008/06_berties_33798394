@@ -187,3 +187,5 @@ If you already have the EJS package then you can skip this step
 2.4 Added code to index.js and users.js to allow a redirectLogin function
 
 2.5 Added code to main.js file and index.ejs file to create a logout route
+
+2.6 Added code to books.js and users.js to deny access to people who are not logged in and have added an access control section to the README.md file
