@@ -10,12 +10,25 @@ var express = require ('express')
 var ejs = require('ejs')
 const path = require('path')
 
+//Import express session
+var session = require('express-session');
+
 //Import mysql2
 var mysql = require('mysql2')
 
 //Create the express application object
 const app = express()
 const port = 8000
+
+//Create a session 
+app.use(session({
+    secret: 'somerandomstuff',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
 
 //Tell Express that we want to use EJS as the templating engine
 app.set('view engine', 'ejs')
