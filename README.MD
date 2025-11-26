@@ -73,7 +73,7 @@ Access Control Summary
 
 I added session-based access control using a redirectLogin middleware function. This middleware checks whether req.session.userId is set. If not, the user is redirected to the login page (/users/login). If the user is logged in, they can access the protected route.
 
-Protected Routes (Login Required)
+Protected Routes (Login Required):
 
 Audit Log Page (/users/audit) – Only logged-in users can view the audit history.
 
@@ -81,7 +81,7 @@ Add Book Page (/books/addbooks) – Only logged-in users can access the Add Book
 
 Users List Page (/users/list) – Only logged-in users can view the list of registered users.
 
-Public Routes (No Login Required)
+Public Routes (No Login Required):
 
 Home Page (/) – Accessible to anyone.
 
