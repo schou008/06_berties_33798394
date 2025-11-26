@@ -2,6 +2,17 @@
 const express = require("express")
 const router = express.Router()
 
+//Redirect middleware
+const redirectLogin = (req, res, next) => {
+    if (!req.session.userId) {
+        //Redirect to the login page
+        res.redirect('/users/login')
+    } else {
+        //Move to the next middleware function
+        next()
+    }
+}
+
 router.get('/search', function(req, res, next){
     res.render("search.ejs")
 });
@@ -40,23 +51,21 @@ router.get('/list', function(req, res, next) {
 });
 
 //Shows the Add Book form
-router.get('/addbook', (req, res) => {
+router.get('/addbook', redirectLogin, (req, res) => {
     res.render('addbook'); // renders addbook.ejs
 });
 
-//Handles form submission and save book to database
-router.post('/bookadded', function (req, res, next) {
+// Handle Add Book submission (protected)
+router.post('/bookadded', redirectLogin, function (req, res, next) {
     let sqlquery = "INSERT INTO books (name, price) VALUES (?,?)";
     let newrecord = [req.body.name, req.body.price];
 
     db.query(sqlquery, newrecord, (err, result) => {
-        if (err) {
-            next(err);
-        } else {
-            res.send('This book is added to database. Name: '+ req.body.name + ', Price: $' + req.body.price);
-        }
+        if (err) return next(err);
+        res.send('This book is added to database. Name: '+ req.body.name + ', Price: £' + req.body.price + 
+                 ' <a href="/books/list">View Books</a>');
     });
-});
+})
 
 // Route to display bargain books (price < £20)
 router.get('/bargainbooks', (req, res, next) => {

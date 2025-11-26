@@ -67,6 +67,50 @@ success = 0 for failed logins
 
 This provides a full audit trail of who logged in, when, and whether each attempt was successful or failed.
 
+## Access Control
+
+Access Control Summary
+
+I added session-based access control using a redirectLogin middleware function. This middleware checks whether req.session.userId is set. If not, the user is redirected to the login page (/users/login). If the user is logged in, they can access the protected route.
+
+Protected Routes (Login Required)
+
+Audit Log Page (/users/audit) – Only logged-in users can view the audit history.
+
+Add Book Page (/books/addbooks) – Only logged-in users can access the Add Book form.
+
+Users List Page (/users/list) – Only logged-in users can view the list of registered users.
+
+Public Routes (No Login Required)
+
+Home Page (/) – Accessible to anyone.
+
+About Page (/about) – Accessible to anyone.
+
+Book List Page (/books/list) – Accessible to anyone.
+
+Bargain Book Page (/books/bargainbooks) – Accessible to anyone.
+
+Register Page (/users/register) – Accessible to anyone so new users can register.
+
+Login Page (/users/login) – Accessible to anyone so users can log in.
+
+Testing
+
+I tested the application under two scenarios:
+
+When not logged in:
+
+Attempting to access any protected route (/users/audit, /books/addboook, /users/list) redirects to /users/login.
+
+Public pages load normally.
+
+When logged in:
+
+All protected routes load successfully.
+
+Users can log out, which ends the session and redirects them appropriately.
+
 ## Technologies Used
 
 Node.js - Running the Server with node.js

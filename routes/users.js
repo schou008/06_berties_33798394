@@ -122,7 +122,7 @@ router.post('/loggedin', function(req, res, next) {
 
 
 //Audit Log History Page
-router.get('/audit', function (req, res, next) {
+router.get('/audit', redirectLogin, function (req, res, next) {
 
     //Retrieve the full audit history
     const sql = "SELECT username, success, timestamp FROM audit_log ORDER BY timestamp DESC"
