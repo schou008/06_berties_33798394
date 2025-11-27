@@ -41,7 +41,7 @@ router.get('/addbook', redirectLogin, (req, res) => {
     res.render('addbook', { errors: [], body: {} });
 });
 
-//Handle Add Book submission with validation
+//Handle Add Book submission with validation and sanitisation
 router.post('/bookadded', 
     redirectLogin,
     [
@@ -58,12 +58,16 @@ router.post('/bookadded',
             return res.render('addbook', { errors: errors.array(), body: req.body });
         }
 
+        //Sanitize book name to prevent XSS
+        const bookName = req.sanitize(req.body.name);
+        const price = req.body.price; // Numeric, no sanitization needed
+
         const sqlquery = "INSERT INTO books (name, price) VALUES (?,?)";
-        const newrecord = [req.body.name, req.body.price];
+        const newrecord = [bookName, price];
 
         db.query(sqlquery, newrecord, (err, result) => {
             if (err) return next(err);
-            res.send('This book is added to database. Name: '+ req.body.name + ', Price: £' + req.body.price +
+            res.send('This book is added to database. Name: '+ bookName + ', Price: £' + price +
                      ' <a href="/books/list">View Books</a>');
         });
     }

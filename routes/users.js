@@ -106,8 +106,8 @@ router.get('/login', function(req, res, next) {
 //Login Handler
 router.post('/loggedin', function(req, res, next) {
 
-    const username = req.body.username
-    const password = req.body.password
+    const username = req.sanitize(req.body.username); // Sanitize username to prevent XSS
+    const password = req.body.password; // Do not sanitize password
 
     //Select the hashed password for the user from the database
     const sql = "SELECT hashedPassword FROM users WHERE username = ?"
@@ -117,38 +117,24 @@ router.post('/loggedin', function(req, res, next) {
 
         //Username not found
         if (results.length === 0) {
-
-            //AUDIT: Record failed login (no such username)
             const auditFail = "INSERT INTO audit_log (username, success) VALUES (?, ?)"
             db.query(auditFail, [username, false])
-
             return res.send("Login failed: Incorrect username or password.")
         }
 
         const hashedPassword = results[0].hashedPassword
 
-        //Compare the password supplied with the password retrieved from the database
         bcrypt.compare(password, hashedPassword, function(err, same) {
             if (err) return next(err)
 
             if (same) {
-
-                //AUDIT: Record successful login
                 const auditSuccess = "INSERT INTO audit_log (username, success) VALUES (?, ?)"
                 db.query(auditSuccess, [username, true])
-
-                //Save user session
-                req.session.userId = req.body.username;
-
-                //Send success message
+                req.session.userId = username;
                 return res.send("Login successful! Welcome back, " + username + ".")
             } else {
-
-                //AUDIT: Record failed login (wrong password)
                 const auditFail = "INSERT INTO audit_log (username, success) VALUES (?, ?)"
                 db.query(auditFail, [username, false])
-
-                //Send failure message
                 return res.send("Login failed: Incorrect username or password.")
             }
         })
@@ -158,13 +144,10 @@ router.post('/loggedin', function(req, res, next) {
 //Audit Log History Page
 router.get('/audit', redirectLogin, function (req, res, next) {
 
-    //Retrieve the full audit history
     const sql = "SELECT username, success, timestamp FROM audit_log ORDER BY timestamp DESC"
 
     db.query(sql, function (err, results) {
         if (err) return next(err)
-
-        //Render audit.ejs with the audit log data
         res.render('audit.ejs', { audit: results })
     })
 })

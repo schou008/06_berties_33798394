@@ -131,6 +131,42 @@ Reasoning:
 - Validation is applied wherever user input is submitted to the server.
 - Read-only pages do not require validation.
 
+## Sanitisation and XSS Protection
+
+Register Form
+
+First Name
+
+Sanitised using req.sanitize()
+
+Reason: Displayed on pages (e.g., greetings). XSS risk
+
+Last Name
+
+Sanitised using req.sanitize()
+
+Reason: Displayed on pages. XSS risk
+
+Email
+
+Sanitised using req.sanitize()
+
+Reason: Could be displayed or emailed. XSS protection
+
+Username
+
+Sanitised using req.sanitize()
+
+Reason: Could appear on user lists or greetings. XSS risk
+
+Password
+
+Not sanitised
+
+Reason: Not displayed; sanitising could alter intended password. No XSS risk
+
+
+
 ## Technologies Used
 
 Node.js - Running the Server with node.js
@@ -223,3 +259,5 @@ If you already have the EJS package then you can skip this step
 2.9 Added code to books.js and addbook.ejs to allow validation on the addbook page
 
 3.0 Added Validation section to README.md file
+
+3.1 Added code to index.js file and users.js file to add sanatization to the register page to protect it from XSS attacks
