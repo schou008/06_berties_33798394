@@ -1,18 +1,14 @@
 <!doctype html>
 <html>
   <head>
-    <!-- Page title dynamically includes the shop name -->
     <title>Register for <%=shopData.shopName%></title>
-    
-    <!-- Link to external CSS for styling -->
     <link rel="stylesheet" type="text/css" href="/main.css" />
   </head>
   <body>
-    <!-- Page heading with shop name -->
+
     <h1>Register for <%=shopData.shopName%></h1>
 
-        <!-- Error Handler -->
-        <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+    <% if (typeof errors !== "undefined" && errors.length > 0) { %>
         <div class="error-box">
             <ul>
                 <% errors.forEach(error => { %>
@@ -21,18 +17,15 @@
             </ul>
         </div>
     <% } %>
-    
-    <!-- Registration form -->
+
     <form method="POST" action="registered">
-        <!-- Input fields for user details -->
         <p>First name: <input id="first" type="text" name="first" /></p>
         <p>Last name: <input id="last" type="text" name="last" /></p>
         <p>Email: <input id="email" type="email" name="email" /></p>
         <p>Username: <input id="username" type="text" name="username" /></p>
         <p>Password: <input id="password" type="password" name="password" /></p>
-        
-        <!-- Submit button -->
         <input type="submit" value="Register" />
     </form>
+
   </body>
 </html>

@@ -30,7 +30,7 @@ router.post('/registered',
     [
         check('email')
             .isEmail()
-            .withMessage("Please enter a valid email address."),
+            .withMessage("Please enter a valid email address. Example #####@#####.com or #####@#####.co.uk"),
 
         check('username')
             .isLength({ min: 5, max: 20 })
@@ -82,7 +82,6 @@ router.post('/registered',
         }
     }
 );
-
 //List All Users
 router.get('/list', redirectLogin, function (req, res, next) {
     const sqlquery = "SELECT username, firstName, lastName, email FROM users";
