@@ -6,7 +6,7 @@ console.log('DB Password:', process.env.BB_PASSWORD);
 console.log('DB Name:', process.env.BB_DATABASE);
 
 //Import express and ejs
-var express = require ('express')
+var express = require('express')
 var ejs = require('ejs')
 const path = require('path')
 
@@ -15,6 +15,9 @@ var session = require('express-session');
 
 //Import mysql2
 var mysql = require('mysql2')
+
+//Import express-sanitizer
+const expressSanitizer = require('express-sanitizer');
 
 //Create the express application object
 const app = express()
@@ -35,6 +38,9 @@ app.set('view engine', 'ejs')
 
 //Set up the body parser 
 app.use(express.urlencoded({ extended: true }))
+
+//Create an input sanitizer
+app.use(expressSanitizer()); // <-- Added
 
 //Set up public folder (for css and static js)
 app.use(express.static(path.join(__dirname, 'public')))

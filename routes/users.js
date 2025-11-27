@@ -57,31 +57,35 @@ router.post('/registered',
             return res.render('register.ejs', { errors: errors.array() });
         }
 
-        //Retrieves the Plain Password from the Form
-        const plainPassword = req.body.password
+        //Sanitize fields that can be displayed on pages
+        const firstName = req.sanitize(req.body.first);
+        const lastName  = req.sanitize(req.body.last);
+        const email     = req.sanitize(req.body.email);
+        const username  = req.sanitize(req.body.username);
+
+        //Password is NOT sanitized
+        const plainPassword = req.body.password;
 
         try {
             bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
-                if (err) return next(err)
+                if (err) return next(err);
 
-                //Saving data in database
                 const sql = 'INSERT INTO users (username, firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
-                const values = [req.body.username, req.body.first, req.body.last, req.body.email, hashedPassword];
+                const values = [username, firstName, lastName, email, hashedPassword];
 
                 db.query(sql, values, function (error, _results) {
                     if (error) return next(error);
 
-                    //Build result message
-                    let result = 'Hello ' + req.body.first + ' ' + req.body.last + ' you are now registered! We will send an email to you at ' + req.body.email;
-
+                    let result = 'Hello ' + firstName + ' ' + lastName + ' you are now registered! We will send an email to you at ' + email;
                     res.send(result);
                 });
             });
         } catch (error) {
-            next(error)
+            next(error);
         }
     }
 );
+
 //List All Users
 router.get('/list', redirectLogin, function (req, res, next) {
     const sqlquery = "SELECT username, firstName, lastName, email FROM users";
