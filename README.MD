@@ -131,6 +131,8 @@ bcrypt - Password Hashing
 
 express-session - Used for the middleware of the Web Application
 
+express-validator - Used to validate User inputs
+
 ## How to Install and Run Locally
 
 1. Clone the Repository You can clone the repository by typing the command below: git clone https://github.com/schou008/06_berties_33798394 cd 06_berties_33798394
@@ -152,9 +154,11 @@ If you already have the EJS package then you can skip this step
 
 8. run npm install express-session 
 
-9. Run the Web Application You can run the web application by typing the command below: node index.js
+9. run npm install express-validator 
 
-10. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+10. Run the Web Application You can run the web application by typing the command below: node index.js
+
+11. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
 
 ## Versions
 
@@ -191,3 +195,5 @@ If you already have the EJS package then you can skip this step
 2.5 Added code to main.js file and index.ejs file to create a logout route
 
 2.6 Added code to books.js and users.js to deny access to people who are not logged in and have added an access control section to the README.md file
+
+2.7 Added code to users.js so that if the user types in wrong information in the register page it will redirect them back to the register page and not allow them to be registered
