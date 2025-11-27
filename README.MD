@@ -117,6 +117,20 @@ Register Page Validation
 
 I have added server-side input validation using the express-validator module on the user registration page. The system checks that the email entered is valid, the username is between 5 and 20 characters, and the password is at least 8 characters long for security. In addition, both the first name and last name fields must not be empty. If any validation fails, the user is returned to the registration page and the appropriate error messages are displayed.
 
+Validation applied to other pages:
+
+- Login page: username and password required.
+- Add Book page: book name required, price must be a positive number.
+
+Validation not applied to other pages:
+
+- Home page, About page, Book list, Bargain books: these pages are read-only or display data only, so no user input to validate.
+
+Reasoning:
+
+- Validation is applied wherever user input is submitted to the server.
+- Read-only pages do not require validation.
+
 ## Technologies Used
 
 Node.js - Running the Server with node.js
@@ -205,3 +219,7 @@ If you already have the EJS package then you can skip this step
 2.7 Added code to users.js so that if the user types in wrong information in the register page it will redirect them back to the register page and not allow them to be registered
 
 2.8 Added code to users.js file and register.ejs file so there is more validation in the register page
+
+2.9 Added code to books.js and addbook.ejs to allow validation on the addbook page
+
+3.0 Added Validation section to README.md file
