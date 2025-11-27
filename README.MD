@@ -165,7 +165,29 @@ Not sanitised
 
 Reason: Not displayed; sanitising could alter intended password. No XSS risk
 
+Other Forms that have been sanitized
 
+Login Form:
+
+Sanitised fields: username
+Reason: username is displayed in messages (like "Welcome back, username"). Sanitising prevents XSS if a malicious username exists.
+
+Not sanitised: password
+Reason: Same reasoning as above — passwords are never displayed and are hashed for verification.
+
+Add Book Form:
+
+Sanitised fields: book name
+Reason: The book name is displayed in listings and confirmation messages. Sanitisation prevents malicious HTML/JS injection.
+
+Not sanitised: price
+Reason: Numeric values cannot contain executable scripts; validation ensures the input is a positive number.
+
+Other forms that was not sanitized
+
+Home page, About page, Book list, Bargain books:
+
+No other user input fields are displayed back to users, so sanitisation was not applied.
 
 ## Technologies Used
 
@@ -189,6 +211,8 @@ express-session - Used for the middleware of the Web Application
 
 express-validator - Used to validate User inputs
 
+express-sanitizer - Used to protect from XSS attacks
+
 ## How to Install and Run Locally
 
 1. Clone the Repository You can clone the repository by typing the command below: git clone https://github.com/schou008/06_berties_33798394 cd 06_berties_33798394
@@ -210,11 +234,13 @@ If you already have the EJS package then you can skip this step
 
 8. run npm install express-session 
 
-9. run npm install express-validator 
+9. run npm install express-validator
 
-10. Run the Web Application You can run the web application by typing the command below: node index.js
+10. run npm install express-sanitizer 
 
-11. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+11. Run the Web Application You can run the web application by typing the command below: node index.js
+
+12. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
 
 ## Versions
 
@@ -261,3 +287,5 @@ If you already have the EJS package then you can skip this step
 3.0 Added Validation section to README.md file
 
 3.1 Added code to index.js file and users.js file to add sanatization to the register page to protect it from XSS attacks
+
+3.2 Added code to users.js file and books.js file so that the login page and the addbook page also are protected from XSS attacks
