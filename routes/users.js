@@ -151,8 +151,6 @@ router.post('/loggedin', function(req, res, next) {
     })
 })
 
-
-
 //Audit Log History Page
 router.get('/audit', redirectLogin, function (req, res, next) {
 
@@ -166,7 +164,6 @@ router.get('/audit', redirectLogin, function (req, res, next) {
         res.render('audit.ejs', { audit: results })
     })
 })
-
 
 //Export the router object so index.js can access it
 module.exports = router
