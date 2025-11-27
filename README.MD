@@ -111,6 +111,12 @@ All protected routes load successfully.
 
 Users can log out, which ends the session and redirects them appropriately.
 
+## Validation
+
+Register Page Validation
+
+I have added server-side input validation using the express-validator module on the user registration page. The system checks that the email entered is valid, the username is between 5 and 20 characters, and the password is at least 8 characters long for security. In addition, both the first name and last name fields must not be empty. If any validation fails, the user is returned to the registration page and the appropriate error messages are displayed.
+
 ## Technologies Used
 
 Node.js - Running the Server with node.js
@@ -197,3 +203,5 @@ If you already have the EJS package then you can skip this step
 2.6 Added code to books.js and users.js to deny access to people who are not logged in and have added an access control section to the README.md file
 
 2.7 Added code to users.js so that if the user types in wrong information in the register page it will redirect them back to the register page and not allow them to be registered
+
+2.8 Added code to users.js file and register.ejs file so there is more validation in the register page
