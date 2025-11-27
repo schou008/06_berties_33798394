@@ -2,6 +2,9 @@
 const express = require("express")
 const router = express.Router()
 
+//Express-Validator
+const { check, validationResult } = require('express-validator');
+
 //bcrypt requirements
 const bcrypt = require('bcrypt')
 const saltRounds = 10
@@ -23,32 +26,46 @@ router.get('/register', function (req, res, next) {
 })
 
 //Registered Handler
-router.post('/registered', function (req, res, next) {
-    //Retrieves the Plain Password from the Form
-    const plainPassword = req.body.password
-    //Hash the password before storing it in the database
-    try {
-        bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) {
-            if (err) return next(err)
+router.post('/registered',
+    [
+        check('email').isEmail(),
+        check('username').isLength({ min: 5, max: 20 })
+    ],
+    function (req, res, next) {
 
-            //Saving data in database
-            const sql = 'INSERT INTO users (username, firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
-            const values = [req.body.username, req.body.first, req.body.last, req.body.email, hashedPassword];
+        const errors = validationResult(req);
 
-            db.query(sql, values, function(error, _results) {
-                if (error) return next(error);
+        //If validation fails goes to register page
+        if (!errors.isEmpty()) {
+            return res.render('register.ejs', { errors: errors.array() });
+        }
 
-                //Build result message including plain and hashed password
-                let result = 'Hello ' + req.body.first + ' ' + req.body.last + ' you are now registered! We will send an email to you at ' + req.body.email;
-                result += ' Your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword;
-                
-                res.send(result);
+        //Retrieves the Plain Password from the Form
+        const plainPassword = req.body.password
+
+        try {
+            bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
+                if (err) return next(err)
+
+                //Saving data in database
+                const sql = 'INSERT INTO users (username, firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
+                const values = [req.body.username, req.body.first, req.body.last, req.body.email, hashedPassword];
+
+                db.query(sql, values, function (error, _results) {
+                    if (error) return next(error);
+
+                    //Build result message
+                    let result = 'Hello ' + req.body.first + ' ' + req.body.last + ' you are now registered! We will send an email to you at ' + req.body.email;
+                    result += ' Your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword;
+
+                    res.send(result);
+                });
             });
-        });
-    } catch (error) {
-        next(error)
+        } catch (error) {
+            next(error)
+        }
     }
-})
+);
 
 //List All Users
 router.get('/list', redirectLogin, function (req, res, next) {
