@@ -10,6 +10,17 @@
   <body>
     <!-- Page heading with shop name -->
     <h1>Register for <%=shopData.shopName%></h1>
+
+        <!-- Error Handler -->
+        <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+        <div class="error-box">
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
     
     <!-- Registration form -->
     <form method="POST" action="registered">

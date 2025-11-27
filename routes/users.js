@@ -28,14 +28,31 @@ router.get('/register', function (req, res, next) {
 //Registered Handler
 router.post('/registered',
     [
-        check('email').isEmail(),
-        check('username').isLength({ min: 5, max: 20 })
+        check('email')
+            .isEmail()
+            .withMessage("Please enter a valid email address."),
+
+        check('username')
+            .isLength({ min: 5, max: 20 })
+            .withMessage("Username must be between 5 and 20 characters."),
+
+        check('password')
+            .isLength({ min: 8 })
+            .withMessage("Password must be at least 8 characters long."),
+
+        check('first')
+            .notEmpty()
+            .withMessage("First name cannot be empty."),
+
+        check('last')
+            .notEmpty()
+            .withMessage("Last name cannot be empty.")
     ],
     function (req, res, next) {
 
         const errors = validationResult(req);
 
-        //If validation fails goes to register page
+        //If validation fails return to register page
         if (!errors.isEmpty()) {
             return res.render('register.ejs', { errors: errors.array() });
         }
@@ -56,7 +73,6 @@ router.post('/registered',
 
                     //Build result message
                     let result = 'Hello ' + req.body.first + ' ' + req.body.last + ' you are now registered! We will send an email to you at ' + req.body.email;
-                    result += ' Your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword;
 
                     res.send(result);
                 });
