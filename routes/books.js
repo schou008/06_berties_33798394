@@ -38,7 +38,7 @@ router.get('/list', function(req, res, next) {
 
 //Shows the Add Book form
 router.get('/addbook', redirectLogin, (req, res) => {
-    res.render('addbook', { errors: [], body: {} });
+    res.render("addbook.ejs", { errors: [], body: {} });
 });
 
 //Handle Add Book submission with validation and sanitisation
