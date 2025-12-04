@@ -291,3 +291,5 @@ If you already have the EJS package then you can skip this step
 3.1 Added code to index.js file and users.js file to add sanatization to the register page to protect it from XSS attacks
 
 3.2 Added code to users.js file and books.js file so that the login page and the addbook page also are protected from XSS attacks
+
+3.3 Added code to index.js file and index.ejs. Created files such as weather.js, weather.ejs and weather.css to create a weather page
