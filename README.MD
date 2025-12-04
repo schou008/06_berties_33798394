@@ -238,9 +238,11 @@ If you already have the EJS package then you can skip this step
 
 10. run npm install express-sanitizer 
 
-11. Run the Web Application You can run the web application by typing the command below: node index.js
+11. run npm install request
 
-12. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
+12. Run the Web Application You can run the web application by typing the command below: node index.js
+
+13. Open your Browser Type in http://localhost:8000 in the search bar, you should see the web application
 
 ## Versions
 
