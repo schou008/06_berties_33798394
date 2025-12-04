@@ -189,6 +189,39 @@ Home page, About page, Book list, Bargain books:
 
 No other user input fields are displayed back to users, so sanitisation was not applied.
 
+## API
+Base URL: /api/books
+
+Description:
+This API allows developers to access the list of books available in Bertie’s Books shop in a machine-readable JSON format. You can retrieve all books or filter them based on search terms, price ranges, and sort them by specific fields. This makes it easy to integrate the book data into other applications, websites, or services. The API is read-only and designed for safe public consumption.
+
+Query Parameters:
+
+search – Filter books whose name contains the search term.
+Example: /api/books?search=world
+
+minprice – Return only books with a price greater than or equal to this value.
+Example: /api/books?minprice=5
+
+maxprice – Return only books with a price less than or equal to this value.
+Example: /api/books?maxprice=10
+
+sort – Specify how to sort the results. Acceptable values:
+name – Sort alphabetically by book name
+price – Sort numerically by price
+Example: /api/books?sort=price
+
+Response: JSON array of books with the following fields:
+
+id – Unique identifier for the book
+
+name – Name of the book
+
+price – Price of the book
+
+Error Handling:
+If an error occurs (e.g., database connection failure), the API returns a JSON object containing an error field describing the issue.
+
 ## Technologies Used
 
 Node.js - Running the Server with node.js
@@ -212,6 +245,8 @@ express-session - Used for the middleware of the Web Application
 express-validator - Used to validate User inputs
 
 express-sanitizer - Used to protect from XSS attacks
+
+request - Used to make HTTP requests
 
 ## How to Install and Run Locally
 
@@ -293,3 +328,7 @@ If you already have the EJS package then you can skip this step
 3.2 Added code to users.js file and books.js file so that the login page and the addbook page also are protected from XSS attacks
 
 3.3 Added code to index.js file and index.ejs. Created files such as weather.js, weather.ejs and weather.css to create a weather page
+
+3.4 Added code to index.js and created file api.js to create a api that shows books with search, price range and sort
+
+3.5 Added API section in README.md file
